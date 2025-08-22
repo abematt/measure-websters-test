@@ -1,14 +1,12 @@
 from fastapi import HTTPException
-from llama_index.core.retrievers import VectorIndexRetriever
-from llama_index.core.query_engine import RetrieverQueryEngine
-from llama_index.core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage
 from typing import Optional
 import traceback
 
 from ..models import QueryRequest, QueryResponse
-from ..utils import build_metadata_filters, get_source_instruction_and_format
+from ..utils import get_source_instruction_and_format
+from ..utils.local_rag import create_standard_local_rag
 from ..auth.utils import save_chat_message
 
 async def query_combined(request: QueryRequest, index, source_preferences, user_id: Optional[str] = None) -> QueryResponse:
@@ -17,37 +15,16 @@ async def query_combined(request: QueryRequest, index, source_preferences, user_
         raise HTTPException(status_code=503, detail="Index not loaded")
     
     try:
-        # Create retriever with optional filters
-        filters_obj = build_metadata_filters(request.filters)
-        
-        retriever = VectorIndexRetriever(
-            index=index,
-            similarity_top_k=request.top_k,
-            filters=filters_obj
+        # Step 1: Get standardized local RAG results
+        local_rag = create_standard_local_rag(index, top_k=request.top_k)
+        rag_results = local_rag.execute_full_pipeline(
+            query=request.query,
+            filters=request.filters
         )
         
-        # Step 1: Get local semantic search results
-        nodes = retriever.retrieve(request.query)
-        context_str = "\n\n".join([node.node.get_content() for node in nodes])
-        
-        # Create local query engine for focused local response
-        QA_TEMPLATE = PromptTemplate(
-            "Below are multiple sources containing data schemas, event types, and data samples.\n"
-            "Sources are organized by category (e.g., appusage, social) and platform (e.g., ios, android).\n"
-            "---------------------\n"
-            "{context_str}\n"
-            "---------------------\n"
-            "Using the information above, please answer the following question: {query_str}\n"
-            "Focus on providing specific details from the sources. Be concise and factual."
-        )
-        
-        local_query_engine = RetrieverQueryEngine.from_args(
-            retriever=retriever,
-            text_qa_template=QA_TEMPLATE,
-        )
-        
-        local_response = local_query_engine.query(request.query)
-        local_response_text = str(local_response)
+        local_response_text = rag_results["response"]
+        context_str = rag_results["context_string"]
+        nodes = rag_results["raw_nodes"]
         
         # Step 2: Get web search results with GPT-4o-mini
         llm = ChatOpenAI(model="gpt-4o-mini", output_version="responses/v1")
@@ -170,15 +147,14 @@ async def query_combined(request: QueryRequest, index, source_preferences, user_
         # Build source nodes with both local and web sources
         source_nodes = []
         
-        # Add local sources
-        for node in nodes:
+        # Add standardized local sources
+        for source_node in rag_results["source_nodes"]:
             source_info = {
-                "text": node.node.get_content(),
+                **source_node,
                 "metadata": {
-                    **node.node.metadata,
+                    **source_node["metadata"],
                     "source_origin": "local_database"
-                },
-                "score": node.score if hasattr(node, 'score') else None
+                }
             }
             source_nodes.append(source_info)
         

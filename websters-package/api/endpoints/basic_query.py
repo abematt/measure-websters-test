@@ -1,58 +1,29 @@
 from fastapi import HTTPException
-from llama_index.core.retrievers import VectorIndexRetriever
-from llama_index.core.query_engine import RetrieverQueryEngine
-from llama_index.core.prompts import PromptTemplate
 from typing import Dict, Any, Optional
 import traceback
 
 from ..models import QueryRequest, QueryResponse
-from ..utils import build_metadata_filters
+from ..utils.local_rag import create_standard_local_rag
 from ..auth.utils import save_chat_message
 
 async def query_index(request: QueryRequest, index, user_id: Optional[str] = None) -> QueryResponse:
-    """Basic RAG query endpoint"""
+    """Basic RAG query endpoint using standardized local RAG processing"""
     if not index:
         raise HTTPException(status_code=503, detail="Index not loaded")
     
     try:
-        # Create retriever with optional filters
-        filters_obj = build_metadata_filters(request.filters)
+        # Create standardized local RAG processor
+        local_rag = create_standard_local_rag(index, top_k=request.top_k)
         
-        retriever = VectorIndexRetriever(
-            index=index,
-            similarity_top_k=request.top_k,
-            filters=filters_obj
+        # Execute standardized RAG pipeline
+        rag_results = local_rag.execute_full_pipeline(
+            query=request.query,
+            filters=request.filters
         )
-        
-        QA_TEMPLATE = PromptTemplate(
-            "Below are multiple sources containing data schemas, event types, and data samples.\n"
-            "Sources are organized by category (e.g., appusage, social) and platform (e.g., ios, android).\n"
-            "---------------------\n"
-            "{context_str}\n"
-            "---------------------\n"
-            "Using the information above, please answer the following question: {query_str}\n"
-            "Focus on providing specific details from the sources and mention which data sources you're using."
-        )
-        
-        custom_query_engine = RetrieverQueryEngine.from_args(
-            retriever=retriever,
-            text_qa_template=QA_TEMPLATE,
-        )
-        
-        response = custom_query_engine.query(request.query)
-        
-        source_nodes = []
-        for node in response.source_nodes:
-            source_info = {
-                "text": node.node.get_content(),
-                "metadata": node.node.metadata,
-                "score": node.score if hasattr(node, 'score') else None
-            }
-            source_nodes.append(source_info)
         
         query_response = QueryResponse(
-            response=str(response),
-            source_nodes=source_nodes
+            response=rag_results["response"],
+            source_nodes=rag_results["source_nodes"]
         )
         
         # Auto-save to database if user is authenticated
@@ -61,8 +32,8 @@ async def query_index(request: QueryRequest, index, user_id: Optional[str] = Non
                 save_chat_message(
                     user_id=user_id,
                     message=request.query,
-                    local_response=str(response),
-                    local_citations=source_nodes,
+                    local_response=rag_results["response"],
+                    local_citations=rag_results["source_nodes"],
                     endpoint_type="query",
                     metadata=request.filters
                 )

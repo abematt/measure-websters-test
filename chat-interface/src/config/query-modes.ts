@@ -14,13 +14,6 @@ export interface QueryModeConfig {
 
 export const QUERY_MODES: QueryModeConfig[] = [
   {
-    value: "basic",
-    label: "Basic Search",
-    icon: Database,
-    description: "Only Embedding Search",
-    behavior: "basic",
-  },
-  {
     value: "enhanced",
     label: "Two Step",
     icon: Sparkles,
