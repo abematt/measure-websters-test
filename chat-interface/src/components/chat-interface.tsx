@@ -125,53 +125,38 @@ export function ChatInterface() {
   };
 
   return (
-    <Card className="w-full h-full flex flex-col">
+    <Card className="w-full h-full flex flex-col py-0">
       <CardHeader className="pb-2 pt-3 px-3 border-b border-border/40">
-        <CardTitle className="flex items-center justify-between">
-          <div className="text-sm text-muted-foreground">
-            Intelligent Chat Interface for Measure&apos;s Data
+        <div className="flex items-center justify-between mb-2">
+          {/* Query Mode Dropdown - Top Left */}
+          <div className="flex items-center gap-2">
+            <QueryModeDropdown value={queryMode} onValueChange={(v) => actions.setQueryMode(v as QueryMode)} />
           </div>
-          <div className="flex items-center gap-4">
-            {/* Query Mode Dropdown */}
-            <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-muted-foreground">
-                Mode:
-              </span>
-              <QueryModeDropdown value={queryMode} onValueChange={(v) => actions.setQueryMode(v as QueryMode)} />
-            </div>
 
-            {/* Health Status */}
-            <div className="flex items-center gap-2">
-              <div
-                className={`w-2 h-2 rounded-full transition-colors ${
-                  healthDetails?.status === "degraded"
-                    ? "bg-orange-500 shadow-sm shadow-orange-500/20"
-                    : isHealthy === true
-                    ? "bg-green-500 shadow-sm shadow-green-500/20"
-                    : isHealthy === false
-                    ? "bg-red-500 shadow-sm shadow-red-500/20"
-                    : "bg-yellow-500 shadow-sm shadow-yellow-500/20"
-                }`}
-                title={healthDetails ? `Index: ${healthDetails.index_loaded ? 'Loaded' : 'Not loaded'}, Path: ${healthDetails.index_path_exists ? 'Exists' : 'Missing'}` : ''}
-              />
-              <span className="text-sm font-medium text-muted-foreground">
-                {healthDetails?.status === "degraded"
-                  ? "Degraded (Index issue)"
+          {/* Health Status - Top Right */}
+          <div className="flex items-center gap-2">
+            <div
+              className={`w-2 h-2 rounded-full transition-colors ${
+                healthDetails?.status === "degraded"
+                  ? "bg-orange-500 shadow-sm shadow-orange-500/20"
                   : isHealthy === true
-                  ? "Connected"
+                  ? "bg-green-500 shadow-sm shadow-green-500/20"
                   : isHealthy === false
-                  ? "Disconnected"
-                  : "Checking..."}
-              </span>
-            </div>
+                  ? "bg-red-500 shadow-sm shadow-red-500/20"
+                  : "bg-yellow-500 shadow-sm shadow-yellow-500/20"
+              }`}
+              title={healthDetails ? `Index: ${healthDetails.index_loaded ? 'Loaded' : 'Not loaded'}, Path: ${healthDetails.index_path_exists ? 'Exists' : 'Missing'}` : ''}
+            />
+            <span className="text-sm font-medium text-muted-foreground">
+              {healthDetails?.status === "degraded"
+                ? "Degraded (Index issue)"
+                : isHealthy === true
+                ? "Connected"
+                : isHealthy === false
+                ? "Disconnected"
+                : "Checking..."}
+            </span>
           </div>
-        </CardTitle>
-
-        {/* Mode Description */}
-        <div className="mt-2">
-          <p className="text-xs text-muted-foreground">
-            {getCurrentModeConfig().description}
-          </p>
         </div>
       </CardHeader>
 

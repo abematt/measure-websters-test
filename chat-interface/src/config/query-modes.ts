@@ -15,25 +15,25 @@ export interface QueryModeConfig {
 export const QUERY_MODES: QueryModeConfig[] = [
   {
     value: "basic",
-    label: "Basic",
+    label: "Basic Search",
     icon: Database,
-    description: "Database only",
+    description: "Only Embedding Search",
     behavior: "basic",
-  },
-  {
-    value: "combined",
-    label: "Web Enhanced",
-    icon: Globe,
-    description: "Automatic web search",
-    behavior: "combined",
   },
   {
     value: "enhanced",
     label: "Two Step",
     icon: Sparkles,
-    description: "Controlled web search",
+    description: "Embedding + Manual Web Search",
     behavior: "enhanced",
     default: true,
+  },
+  {
+    value: "combined",
+    label: "Auto Web Search",
+    icon: Globe,
+    description: "Embedding + ChatGPT Web Search",
+    behavior: "combined",
   },
 ];
 
@@ -49,5 +49,3 @@ export function getDefaultModeValue(
 ): QueryMode {
   return (modes.find((m) => m.default) ?? modes[0]).value;
 }
-
-

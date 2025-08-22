@@ -60,7 +60,7 @@ export function QueryModeDropdown({
       </Button>
 
       {isOpen && (
-        <div className="absolute top-full mt-1 w-full min-w-[200px] bg-background border border-border rounded-md shadow-lg z-50 overflow-hidden">
+        <div className="absolute top-full mt-1 w-full min-w-[320px] bg-background border border-border rounded-md shadow-lg z-50 overflow-hidden">
           {modes.map((mode) => {
             const Icon = mode.icon;
             const isSelected = mode.value === value;
@@ -80,7 +80,7 @@ export function QueryModeDropdown({
                 <Icon className="w-4 h-4 text-muted-foreground" />
                 <div className="flex-1 min-w-0">
                   <div className="font-medium">{mode.label}</div>
-                  <div className="text-xs text-muted-foreground truncate">{mode.description}</div>
+                  <div className="text-xs text-muted-foreground whitespace-normal">{mode.description}</div>
                 </div>
                 {isSelected && <Check className="w-4 h-4 text-primary" />}
               </button>
