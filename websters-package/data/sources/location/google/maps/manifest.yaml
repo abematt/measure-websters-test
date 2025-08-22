@@ -1,0 +1,8 @@
+datatype: location.google.maps
+version: '1.0'
+description: Google Maps user activity including searches, directions, and location views
+sample_limit: 50
+tags:
+- location
+- navigation
+- maps

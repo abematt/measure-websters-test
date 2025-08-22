@@ -1,0 +1,19 @@
+Column,Type,Example,Description
+user_id,String,0e7ef47fbeaf3405a9c236b43c3f5bec,The user ID
+event_datetime,Datetime,2023-04-18 6:19:09,Date/Time of order (UTC)
+event_type,String,search,Always search
+search_term,String,Cricket bat,The search term used
+search_engine,String,amazon,Search engine used by user.  Will always be amazon.
+app_type,String,Mobile application or browser,The type of application user initiated search from
+device_type,String,Desktop or Smartphone,The type of device user initiated search from
+prime_customer,String,Yes,If the account has a prime subscription (yes or no)
+from_external_link,String,No,If the search started with an external link click (yes or no)
+from_external_site,String,No,If the search started from external site (yes or no)
+amazon_domain,String,www.amazon.com,The amazon domain 
+num_clicked_items,Integer,3,The number of items clicked
+num_items_added_to_cart,Integer,1,The number of items added to cart
+num_items_ordered,Integer,1,The number of items ordered
+purchased_any_item,String,Yes,Was an item purchased in session (yes or no)
+paid_purchase,String,Yes,Was the order a paid purchase (yes or no)
+first_purchased_item_asin,String,B09HQZPHXS,ASIN numbr of the item purchased in session
+department,String,Fashion,"The department/category of the item, aps denotes all departments"

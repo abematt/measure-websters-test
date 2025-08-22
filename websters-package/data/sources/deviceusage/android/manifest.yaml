@@ -1,0 +1,6 @@
+datatype: deviceusage.android
+version: '1.0'
+description: Android device usage metrics with foreground time tracking
+sample_limit: 50
+tags:
+- android

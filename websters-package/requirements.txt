@@ -1,0 +1,38 @@
+# Core LlamaIndex and AI dependencies
+llama-index
+llama-index-embeddings-openai
+llama-index-llms-openai
+
+# FastAPI and web framework
+fastapi
+uvicorn[standard]
+
+# LangChain dependencies
+langchain-openai
+langchain-core
+
+# Haystack dependencies
+haystack-ai
+
+# Data processing
+pandas
+pyyaml
+
+# Environment management
+python-dotenv
+
+# HTTP requests
+requests
+aiohttp
+
+# Additional utilities
+pathlib2
+
+# Authentication dependencies
+pymongo
+python-jose[cryptography]
+passlib[bcrypt]
+python-multipart
+
+# Optional: For development/testing
+pytest

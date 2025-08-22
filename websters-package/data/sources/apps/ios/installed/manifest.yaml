@@ -1,0 +1,6 @@
+datatype: apps.ios.installed
+version: '1.0'
+description: iOS installed apps list with purchase dates
+sample_limit: 50
+tags:
+- ios

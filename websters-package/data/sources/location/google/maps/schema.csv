@@ -1,0 +1,8 @@
+Column,Type,Example,Description
+user_id,String,1234,The user ID
+app_name,String,google_maps,Name of app (always google_maps)
+event_datetime,Datetime,2022-11-22 11:37:22 PM,Datetime of event (in UTC)
+event_type,String,viewed_area,Type of event
+event_data,String / JSON,"{""area"": ""London""}",Additional details about event as a json string
+search_term,String,Hotels,Search term (only applicable when event_type is search)
+location,String,London,Location of interest (only applicable when event_type is direction_to, viewed_area, or viewed_location_profile)

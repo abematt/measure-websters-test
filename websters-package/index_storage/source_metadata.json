@@ -1,0 +1,364 @@
+{
+  "sources": [
+    {
+      "datatype": "commerce.amazon.search",
+      "category": "commerce",
+      "platform": "amazon",
+      "subtype": "search",
+      "description": "Amazon search queries and results",
+      "version": "1.0",
+      "tags": [
+        "e-commerce"
+      ],
+      "has_schema": true,
+      "has_samples": true,
+      "has_events": false
+    },
+    {
+      "datatype": "commerce.amazon.orderhistory",
+      "category": "commerce",
+      "platform": "amazon",
+      "subtype": "orderhistory",
+      "description": "Amazon order history and purchase data",
+      "version": "1.0",
+      "tags": [
+        "e-commerce"
+      ],
+      "has_schema": true,
+      "has_samples": true,
+      "has_events": false
+    },
+    {
+      "datatype": "purchases.ios.inapppurchases",
+      "category": "purchases",
+      "platform": "ios",
+      "subtype": "inapppurchases",
+      "description": "iOS in-app purchase and subscription transactions",
+      "version": "1.0",
+      "tags": [
+        "ios"
+      ],
+      "has_schema": true,
+      "has_samples": true,
+      "has_events": false
+    },
+    {
+      "datatype": "purchases.android.inapppurchases",
+      "category": "purchases",
+      "platform": "android",
+      "subtype": "inapppurchases",
+      "description": "Android in-app purchase transactions",
+      "version": "1.0",
+      "tags": [
+        "android"
+      ],
+      "has_schema": true,
+      "has_samples": true,
+      "has_events": false
+    },
+    {
+      "datatype": "browsing.google.search_allplatforms",
+      "category": "browsing",
+      "platform": "google",
+      "subtype": "search_allplatforms",
+      "description": "Google search history across all platforms (iOS, Android, Desktop)",
+      "version": "1.0",
+      "tags": [
+        "web-activity",
+        "google"
+      ],
+      "has_schema": true,
+      "has_samples": true,
+      "has_events": false
+    },
+    {
+      "datatype": "browsing.safari.history_ios",
+      "category": "browsing",
+      "platform": "safari",
+      "subtype": "history_ios",
+      "description": "Safari browsing and search history (iOS only)",
+      "version": "1.0",
+      "tags": [
+        "web-activity",
+        "ios",
+        "safari"
+      ],
+      "has_schema": true,
+      "has_samples": true,
+      "has_events": false
+    },
+    {
+      "datatype": "browsing.chrome.history_allplatforms",
+      "category": "browsing",
+      "platform": "chrome",
+      "subtype": "history_allplatforms",
+      "description": "Chrome browsing and search history across all platforms (iOS, Android, Desktop)",
+      "version": "1.0",
+      "tags": [
+        "web-activity",
+        "chrome"
+      ],
+      "has_schema": true,
+      "has_samples": true,
+      "has_events": false
+    },
+    {
+      "datatype": "location.google.maps",
+      "category": "location",
+      "platform": "google",
+      "subtype": "maps",
+      "description": "Google Maps user activity including searches, directions, and location views",
+      "version": "1.0",
+      "tags": [
+        "location",
+        "navigation",
+        "maps"
+      ],
+      "has_schema": true,
+      "has_samples": false,
+      "has_events": true
+    },
+    {
+      "datatype": "social.youtube",
+      "category": "social",
+      "platform": "youtube",
+      "subtype": null,
+      "description": "YouTube viewing history and interaction events",
+      "version": "1.0",
+      "tags": [
+        "social-media"
+      ],
+      "has_schema": true,
+      "has_samples": true,
+      "has_events": true
+    },
+    {
+      "datatype": "social.tiktok",
+      "category": "social",
+      "platform": "tiktok",
+      "subtype": null,
+      "description": "TikTok user interaction data with detailed event tracking",
+      "version": "1.0",
+      "tags": [
+        "social-media"
+      ],
+      "has_schema": true,
+      "has_samples": true,
+      "has_events": true
+    },
+    {
+      "datatype": "social.instagram",
+      "category": "social",
+      "platform": "instagram",
+      "subtype": null,
+      "description": "Instagram user interaction data with detailed event tracking",
+      "version": "1.0",
+      "tags": [
+        "social-media"
+      ],
+      "has_schema": true,
+      "has_samples": true,
+      "has_events": true
+    },
+    {
+      "datatype": "social.snapchat",
+      "category": "social",
+      "platform": "snapchat",
+      "subtype": null,
+      "description": "Snapchat user interaction data including snaps, chats, stories, and searches",
+      "version": "1.0",
+      "tags": [
+        "social-media",
+        "messaging"
+      ],
+      "has_schema": true,
+      "has_samples": true,
+      "has_events": true
+    },
+    {
+      "datatype": "ai.google.gemini",
+      "category": "ai",
+      "platform": "google",
+      "subtype": "gemini",
+      "description": "",
+      "version": "1.0",
+      "tags": [],
+      "has_schema": true,
+      "has_samples": true,
+      "has_events": false
+    },
+    {
+      "datatype": "ai.openai.chatgpt",
+      "category": "ai",
+      "platform": "openai",
+      "subtype": "chatgpt",
+      "description": "",
+      "version": "1.0",
+      "tags": [],
+      "has_schema": true,
+      "has_samples": true,
+      "has_events": false
+    },
+    {
+      "datatype": "appusage.ios.usage",
+      "category": "appusage",
+      "platform": "ios",
+      "subtype": "usage",
+      "description": "iOS app usage metrics from Screen Time",
+      "version": "1.0",
+      "tags": [
+        "app-metrics",
+        "ios",
+        "screen-time",
+        "session"
+      ],
+      "has_schema": true,
+      "has_samples": true,
+      "has_events": false
+    },
+    {
+      "datatype": "appusage.ios.notifications",
+      "category": "appusage",
+      "platform": "ios",
+      "subtype": "notifications",
+      "description": "iOS notification frequency and timing data",
+      "version": "1.0",
+      "tags": [
+        "app-metrics",
+        "ios"
+      ],
+      "has_schema": true,
+      "has_samples": true,
+      "has_events": false
+    },
+    {
+      "datatype": "appusage.ios.pickups",
+      "category": "appusage",
+      "platform": "ios",
+      "subtype": "pickups",
+      "description": "iOS device pickup frequency and patterns",
+      "version": "1.0",
+      "tags": [
+        "app-metrics",
+        "ios"
+      ],
+      "has_schema": true,
+      "has_samples": true,
+      "has_events": false
+    },
+    {
+      "datatype": "appusage.android.usage",
+      "category": "appusage",
+      "platform": "android",
+      "subtype": "usage",
+      "description": "Android app usage metrics including screen time and session data",
+      "version": "1.0",
+      "tags": [
+        "app-metrics",
+        "android",
+        "screen-time",
+        "session"
+      ],
+      "has_schema": true,
+      "has_samples": true,
+      "has_events": false
+    },
+    {
+      "datatype": "deviceusage.ios",
+      "category": "deviceusage",
+      "platform": "ios",
+      "subtype": null,
+      "description": "iOS device usage metrics including onscreen and background time",
+      "version": "1.0",
+      "tags": [
+        "ios"
+      ],
+      "has_schema": true,
+      "has_samples": true,
+      "has_events": false
+    },
+    {
+      "datatype": "deviceusage.android",
+      "category": "deviceusage",
+      "platform": "android",
+      "subtype": null,
+      "description": "Android device usage metrics with foreground time tracking",
+      "version": "1.0",
+      "tags": [
+        "android"
+      ],
+      "has_schema": true,
+      "has_samples": true,
+      "has_events": false
+    },
+    {
+      "datatype": "apps.ios.installed",
+      "category": "apps",
+      "platform": "ios",
+      "subtype": "installed",
+      "description": "iOS installed apps list with purchase dates",
+      "version": "1.0",
+      "tags": [
+        "ios"
+      ],
+      "has_schema": true,
+      "has_samples": true,
+      "has_events": false
+    },
+    {
+      "datatype": "apps.android.installed",
+      "category": "apps",
+      "platform": "android",
+      "subtype": "installed",
+      "description": "Android installed apps list",
+      "version": "1.0",
+      "tags": [
+        "android"
+      ],
+      "has_schema": true,
+      "has_samples": true,
+      "has_events": false
+    }
+  ],
+  "categories": [
+    "ai",
+    "social",
+    "appusage",
+    "location",
+    "commerce",
+    "apps",
+    "deviceusage",
+    "browsing",
+    "purchases"
+  ],
+  "platforms": [
+    "safari",
+    "chrome",
+    "openai",
+    "tiktok",
+    "ios",
+    "instagram",
+    "snapchat",
+    "google",
+    "android",
+    "youtube",
+    "amazon"
+  ],
+  "all_tags": [
+    "safari",
+    "chrome",
+    "location",
+    "ios",
+    "e-commerce",
+    "session",
+    "google",
+    "social-media",
+    "maps",
+    "messaging",
+    "app-metrics",
+    "navigation",
+    "web-activity",
+    "android",
+    "screen-time"
+  ]
+}

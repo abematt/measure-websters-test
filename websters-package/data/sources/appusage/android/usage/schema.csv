@@ -1,0 +1,10 @@
+Column,Type,Example,Description
+user_id,string,007d3f75bc99380eb6a9eea7a9c03c5e,The user ID
+app_id,string,com.measureprotocol.contributor.production,The Google Play app id
+app_name,string,MSR,The app name
+usage_date,date,2023-02-19,Date of usage
+in_foreground (seconds),Integer,1266,The number of seconds the app was used
+android_version,Integer,10,The version of anroid the device is using
+device_model,string,Infinix X655C,The device model
+device_manufacturer,string,INFINIX MOBILITY LIMITED,The device manufacturer
+platform,String,android,Always set to android

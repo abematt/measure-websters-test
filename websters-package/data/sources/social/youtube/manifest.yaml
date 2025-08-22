@@ -1,0 +1,6 @@
+datatype: social.youtube
+version: '1.0'
+description: YouTube viewing history and interaction events
+sample_limit: 50
+tags:
+- social-media

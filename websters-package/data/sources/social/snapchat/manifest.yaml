@@ -1,0 +1,7 @@
+datatype: social.snapchat
+version: '1.0'
+description: Snapchat user interaction data including snaps, chats, stories, and searches
+sample_limit: 50
+tags:
+- social-media
+- messaging

@@ -1,0 +1,76 @@
+# Source Preferences Configuration
+# Defines preferred web sources for different data types and platforms
+
+source_preferences:
+  # Default instruction for all queries
+  default:
+    instruction: "Use only official documentation and authoritative sources."
+    
+  # Preferences by data category
+  by_category:
+    social:
+      tiktok:
+        preferred_sources:
+          - "https://support.tiktok.com/"
+        instruction: "For TikTok queries, ONLY use official TikTok support pages (support.tiktok.com)."
+        
+      youtube:
+        preferred_sources:
+          - "https://support.google.com/youtube"
+          - "https://developers.google.com/youtube"
+          - "https://www.youtube.com/creators/"
+        instruction: "For YouTube queries, ONLY use official Google/YouTube support documentation."
+    
+    commerce:
+      amazon:
+        preferred_sources:
+          - "https://www.amazon.com/gp/help/customer/"
+          - "https://developer.amazon.com/"
+        instruction: "For Amazon queries, use official Amazon help pages and developer documentation."
+    
+    browsing:
+      chrome:
+        preferred_sources:
+          - "https://support.google.com/chrome"
+          - "https://developer.chrome.com/"
+        instruction: "For Chrome queries, use official Google Chrome documentation."
+      
+      safari:
+        preferred_sources:
+          - "https://support.apple.com/safari"
+          - "https://developer.apple.com/safari/"
+        instruction: "For Safari queries, use official Apple support documentation."
+    
+    appusage:
+      default:
+        preferred_sources:
+          - "https://developer.apple.com/documentation/screentime"
+          - "https://developer.android.com/guide/topics/ui/settings/digital-wellbeing"
+        instruction: "For app usage queries, reference official platform documentation about screen time and digital wellbeing features."
+  
+  # Preferences by platform
+  by_platform:
+    ios:
+      preferred_sources:
+        - "https://developer.apple.com/"
+        - "https://support.apple.com/"
+      instruction: "For iOS-specific queries, ONLY use Apple's official developer documentation."
+      
+    android:
+      preferred_sources:
+        - "https://developer.android.com/"
+        - "https://source.android.com/"
+        - "https://support.google.com/android"
+      instruction: "For Android-specific queries, ONLY use official Android developer documentation."
+    
+    web:
+      preferred_sources:
+        - "https://developer.mozilla.org/"
+        - "https://web.dev/"
+      instruction: "For web platform queries, use MDN and web.dev documentation."
+
+# Response format preferences
+response_format:
+  data_focus_ratio: 80  # Percentage of response focused on local data
+  context_ratio: 20     # Maximum percentage for web context
+  max_context_sentences: 2  # Maximum sentences for web context

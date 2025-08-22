@@ -1,0 +1,7 @@
+datatype: appusage.ios.notifications
+version: '1.0'
+description: iOS notification frequency and timing data
+sample_limit: 50
+tags:
+- app-metrics
+- ios

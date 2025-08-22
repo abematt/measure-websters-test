@@ -1,0 +1,5 @@
+Column,Type,Example,Description
+user_id,String,007d3f75bc99380eb6a9eea7a9c03c5e,The user ID
+usage_week,Date,2023-01-16,The week of usage (starting of week)
+foreground_min,Integer,1629,Total amount of time app is in foreground and visible to user (minutes). 
+platform,String,android,Always set to android

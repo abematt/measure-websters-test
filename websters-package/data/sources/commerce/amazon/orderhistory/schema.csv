@@ -1,0 +1,14 @@
+Column,Type,Example,Description
+user_id,String,007d3f75bc99380eb6a9eea7a9c03c5e,The user ID
+website,String,amazon.com,"Amazon website that order was purchased from (amazon.com, amazon.co.uk)"
+order_id,String,112-0256917-9129045,Id of order
+order_datetime,Datetime,2023-04-18 6:19:09,Date/Time of order (UTC)
+item_name,String,"Apanage Powered USB 3.0 Hub, 11 Ports USB Hub Splitter",Name of item 
+asin,String,B07DW646GY,ASIN of item
+quanity,Integer,1,Item quantity
+unit_price,Decimal,31.99,Price for item
+currency,String,USD,Currency of order
+item_condition,String,New,"Condition of item (i.e new, used)"
+order_status,String,Closed,"Status of order (i.e. shipped, ordered, canceled)"
+product_category_1,String,Electronics,Primary category for item
+product_category_2,String,Computers & Accessories,Additional category for item

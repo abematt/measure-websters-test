@@ -1,0 +1,9 @@
+Column,Type,Example,Description
+user_id,String,007d3f75bc99380eb6a9eea7a9c03c5e,The user ID
+usage_week,Date,2023-01-16,The week of usage (starting of week)
+onscreen_min,Integer,1629,Total onscreen minutes.  Onscreen is when the device is lit-up and user is actively interacting with phone.
+background_min,Integer,763,"Total background minutes. Background is when device is not lit up, but user is interacting via a phone call, whatsapp call, listening to podcast, etc."
+low_estimate,Integer,1629,"Maximum value of onscreen_min, background_min"
+avg_estimate,Integer,2010,Average of onscreen_min and background_min
+high_estimate,Integer,2392,Sum of onscreen_min and background_min
+platform,String,ios,Always set to ios

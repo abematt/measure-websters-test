@@ -1,0 +1,6 @@
+datatype: apps.android.installed
+version: '1.0'
+description: Android installed apps list
+sample_limit: 50
+tags:
+- android

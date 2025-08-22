@@ -1,0 +1,7 @@
+Column,Type,Example,Description
+user_id,String,007d3f75bc99380eb6a9eea7a9c03c5e,The user ID
+purchase_date,Date,2023-07-02,The date of the app transaction
+item,String,Disney+ Monthly Subscription,The description of the app transation (may be truncated)
+price,Decimal,7.99,The price of the app transaction
+currency,String,$,Currency of purchase
+platform,String,android,"Always ""android"""

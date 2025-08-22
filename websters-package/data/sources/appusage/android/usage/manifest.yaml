@@ -1,0 +1,9 @@
+datatype: appusage.android.usage
+version: '1.0'
+description: Android app usage metrics including screen time and session data
+sample_limit: 50
+tags:
+- app-metrics
+- android
+- screen-time
+- session

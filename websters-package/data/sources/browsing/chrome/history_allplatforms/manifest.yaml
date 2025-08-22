@@ -1,0 +1,8 @@
+datatype: browsing.chrome.history_allplatforms
+version: '1.0'
+description: Chrome browsing and search history across all platforms (iOS, Android,
+  Desktop)
+sample_limit: 50
+tags:
+- web-activity
+- chrome

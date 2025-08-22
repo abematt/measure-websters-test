@@ -1,0 +1,6 @@
+Column,Type,Example,Description
+user_id,String,007d3f75bc99380eb6a9eea7a9c03c5e,The user ID
+app_name,String,MSR,The app name
+date_purchased,Date,"""2023-01-19""",The date the app was installed/purchased
+app_id,String,com.measureprotocol.contributor.production,The App Store app ID
+platform,String,ios,Always set to ios

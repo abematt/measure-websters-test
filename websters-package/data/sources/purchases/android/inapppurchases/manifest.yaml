@@ -1,0 +1,6 @@
+datatype: purchases.android.inapppurchases
+version: '1.0'
+description: Android in-app purchase transactions
+sample_limit: 50
+tags:
+- android

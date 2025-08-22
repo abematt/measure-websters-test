@@ -1,0 +1,44 @@
+user_id,event_datetime,chat_title,chat_id,chat_role,chat_tool_name,chat_message,content_type,multimodal_content_type,model_slug,default_model_slug,attachment,voice_mode_message,citations,search_result_groups,system_hints,canvas_details,chatgpt_plus_user
+12b2ee4693f132d58c513cb2aed1b1c2,2025-01-01 9:05:14,Tibetan Dishes in Manali,6775054a-9a70-800a-8286-516c4b3f4957,user,,I am at a restaurant in Manali called chopsticks. It has Tibetan dishes. What can I order ?,text,,,,,FALSE,,,,,FALSE
+12b2ee4693f132d58c513cb2aed1b1c2,2025-01-01 9:05:23,Tibetan Dishes in Manali,6775054a-9a70-800a-8286-516c4b3f4957,assistant,,"If you're dining at Chopsticks in Manali and want to explore Tibetan dishes, here are some popular options to consider:  
+
+### **Soups & Starters**  
+1. **Thukpa**: A hearty Tibetan noodle soup, often available with chicken, mutton, or vegetables.  
+2. **Thenthuk**: Another variation of noodle soup, with flat hand-pulled noodles.  
+3. **Momos**: Steamed or fried dumplings filled with chicken, mutton, or vegetables, served with spicy dipping sauce.  
+4. **Shabaklep**: Tibetan meat pies, crispy on the outside and savory on the inside.  
+5. **Tingmo**: Steamed Tibetan bread, often paired with spicy gravies or stews.  
+
+### **Main Courses**  
+6. **Gyathuk**: Another type of noodle dish, sometimes with a clear soup base.  
+7. **Shapta**: Stir-fried sliced meat (usually beef or chicken) cooked with Tibetan spices and vegetables.  
+8. **Phing Sha**: A glass noodle dish cooked with vegetables and meat in a mild sauce.  
+
+### **Accompaniments**  
+9. **Tsampa**: Roasted barley flour, often served with butter tea for an authentic Tibetan experience.  
+10. **Butter Tea**: A salty Tibetan tea made with butter and milk, perfect for cold weather.  
+
+### **Desserts**  
+11. **Tibetan Sweet Rice (Dresil)**: A dessert made with rice, sugar, and butter, sometimes garnished with raisins.  
+
+Let me know if you'd like recommendations based on your preferences!",text,,gpt-4o,auto,,FALSE,,,,,FALSE
+12b2ee4693f132d58c513cb2aed1b1c2,2025-01-01 9:05:23,Tibetan Dishes in Manali,6775054a-9a70-800a-8286-516c4b3f4957,assistant,,,text,,gpt-4o,auto,,FALSE,,,,,FALSE
+12b2ee4693f132d58c513cb2aed1b1c2,2025-01-01 9:06:46,Tibetan Dishes in Manali,6775054a-9a70-800a-8286-516c4b3f4957,user,,Pick three best for me,text,,,,,FALSE,,,,,FALSE
+12b2ee4693f132d58c513cb2aed1b1c2,2025-01-01 9:06:49,Tibetan Dishes in Manali,6775054a-9a70-800a-8286-516c4b3f4957,assistant,,"Here are three great Tibetan dishes to try at Chopsticks:  
+
+1. **Chicken Thukpa**: A warm and flavorful noodle soup, perfect for the chilly Manali weather.  
+2. **Steamed Mutton Momos**: Soft dumplings filled with spiced mutton, served with a tangy dipping sauce.  
+3. **Shapta (Beef or Chicken)**: A spicy stir-fried meat dish that’s rich and savory, great for a main course.  
+
+These will give you a perfect balance of flavors and textures from Tibetan cuisine!",text,,gpt-4o,auto,,FALSE,,,,,FALSE
+12b2ee4693f132d58c513cb2aed1b1c2,2025-01-01 9:07:24,Tibetan Dishes in Manali,6775054a-9a70-800a-8286-516c4b3f4957,user,,Should the shapes be dry or with gravy?,text,,,,,FALSE,,,,,FALSE
+12b2ee4693f132d58c513cb2aed1b1c2,2025-01-01 9:07:27,Tibetan Dishes in Manali,6775054a-9a70-800a-8286-516c4b3f4957,assistant,,"Traditionally, **Shapta** is served as a dry or semi-dry stir-fried dish, where the meat and vegetables are coated with flavorful spices but not submerged in gravy. This style enhances the smoky and spicy flavors.  
+
+If you prefer something saucier, you can check with the restaurant if they offer a gravy version. However, the dry version is the authentic Tibetan way to enjoy Shapta.",text,,gpt-4o,auto,,FALSE,,,,,FALSE
+12b2ee4693f132d58c513cb2aed1b1c2,2025-01-01 9:09:36,Tibetan Dishes in Manali,6775054a-9a70-800a-8286-516c4b3f4957,user,,What is shapta?,text,,,,,FALSE,,,,,FALSE
+12b2ee4693f132d58c513cb2aed1b1c2,2025-01-01 9:09:40,Tibetan Dishes in Manali,6775054a-9a70-800a-8286-516c4b3f4957,assistant,,"**Shapta** is a traditional Tibetan dish made by stir-frying thinly sliced meat (usually beef or chicken) with onions, tomatoes, garlic, and a variety of Tibetan spices. It often has a hint of spiciness from red chili or Sichuan pepper, giving it a bold and aromatic flavor.  
+
+The dish is typically semi-dry, with the meat and vegetables coated in a light, savory sauce rather than a heavy gravy. It's often served with steamed rice or Tibetan bread like **Tingmo** to complement the flavors.  
+
+Shapta is loved for its hearty and comforting taste, making it a popular choice in Tibetan cuisine!",text,,gpt-4o,auto,,FALSE,,,,,FALSE
+12b2ee4693f132d58c513cb2aed1b1c2,2025-01-01 9:12:23,Tibetan Dishes in Manali,6775054a-9a70-800a-8286-516c4b3f4957,user,,Sukiyaki what’s that?,text,,,,,FALSE,,,,,FALSE

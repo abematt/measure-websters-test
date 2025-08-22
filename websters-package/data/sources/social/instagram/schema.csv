@@ -1,0 +1,8 @@
+Column,Type,Example,Description
+user_id,String,1234,The user ID
+app_name,String,instagram,The app name
+event_datetime,Datetime,2022-11-22 11:37:22 PM,Datetime of event (in UTC)
+event_type,String,search,"Type of event (i.e. search, browsed_video)"
+event_data,String / JSON,"{search_term: ""Lady Gaga""}",Additional details about event as a json string
+search_term,String,Lady Gaga,Search term (only applicable when event_type is search)
+media_id,String,AXK13483F,Id of media (only applicable when event_type is viewing/browsing media)

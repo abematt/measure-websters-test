@@ -1,0 +1,9 @@
+datatype: appusage.ios.usage
+version: '1.0'
+description: iOS app usage metrics from Screen Time
+sample_limit: 50
+tags:
+- app-metrics
+- ios
+- screen-time
+- session

@@ -1,0 +1,6 @@
+datatype: commerce.amazon.search
+version: '1.0'
+description: Amazon search queries and results
+sample_limit: 50
+tags:
+- e-commerce

@@ -1,0 +1,10 @@
+Column,Type,Example,Description
+user_id,String,007d3f75bc99380eb6a9eea7a9c03c5e,The user ID
+event_date,Date,"""2023-03-02""",Date the domain was visited (UTC)
+event_type,String,browsed_page,browsed_page or search
+domain,String,linkedin.com,Domain of the page visited.
+title,String,Profile | LinkedIn,Title of page visited. Only available when event is browsed_page.  Title may be truncated. 
+url,String,linkedin.com/in/lizcentoni,URL of page visited. Only available when event is browsed_page.  URL may be truncated.
+search_term,String,diddams gold cups,Search term entered by user.  Only available when event is search.  term may be truncated. 
+search_engine,String,google,Search engine used by user
+browser,String,safari,Always set to safari

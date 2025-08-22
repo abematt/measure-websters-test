@@ -1,0 +1,6 @@
+datatype: deviceusage.ios
+version: '1.0'
+description: iOS device usage metrics including onscreen and background time
+sample_limit: 50
+tags:
+- ios

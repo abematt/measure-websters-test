@@ -1,0 +1,13 @@
+user_id,app_id,app_name,usage_date,in_foreground,android_version,device_model,device_manufacturer,platform
+005c7e2c47a134a2818829d6992069bf,com.nielsen.odm,Nielsen Mobile App,2023-02-24,17,10,LGL455DL,LGE,android
+005c7e2c47a134a2818829d6992069bf,com.whatsapp,WhatsApp,2023-02-24,70,10,LGL455DL,LGE,android
+005c7e2c47a134a2818829d6992069bf,com.google.android.apps.messaging,Messages,2023-02-24,47,10,LGL455DL,LGE,android
+005c7e2c47a134a2818829d6992069bf,com.android.vending,Google Play Store,2023-02-24,18,10,LGL455DL,LGE,android
+005c7e2c47a134a2818829d6992069bf,com.measureprotocol.contributor.production,MSR,2023-02-24,52,10,LGL455DL,LGE,android
+005c7e2c47a134a2818829d6992069bf,com.sotg.surveys,Surveys,2023-02-24,10,10,LGL455DL,LGE,android
+005c7e2c47a134a2818829d6992069bf,com.citi.citimobile,Citi Mobile,2023-02-24,0,10,LGL455DL,LGE,android
+005c7e2c47a134a2818829d6992069bf,com.twitter.android,Twitter,2023-02-24,753,10,LGL455DL,LGE,android
+005c7e2c47a134a2818829d6992069bf,com.lge.launcher3,Home,2023-02-24,39,10,LGL455DL,LGE,android
+005c7e2c47a134a2818829d6992069bf,com.android.chrome,Chrome,2023-02-24,41,10,LGL455DL,LGE,android
+005c7e2c47a134a2818829d6992069bf,com.facebook.katana,Facebook,2023-02-24,263,10,LGL455DL,LGE,android
+005c7e2c47a134a2818829d6992069bf,com.android.settings,Settings,2023-02-24,24,10,LGL455DL,LGE,android

@@ -1,0 +1,6 @@
+datatype: purchases.ios.inapppurchases
+version: '1.0'
+description: iOS in-app purchase and subscription transactions
+sample_limit: 50
+tags:
+- ios

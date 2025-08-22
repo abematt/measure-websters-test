@@ -1,0 +1,8 @@
+Column,Type,Example,Description
+user_id,String,007d3f75bc99380eb6a9eea7a9c03c5e,The user ID
+purchase_date,Date,2023-07-16,The date of the app transaction
+item,String,Event Ticket,The description of the app transation
+price,Decimal,"""0.00""",The price of the app transaction
+currency,String,$,Currency of purchase
+type,String,In-app purchase,"The type of transaction, e.g. subscription or in-app purchase"
+platform,String,ios,"Always ""ios"""

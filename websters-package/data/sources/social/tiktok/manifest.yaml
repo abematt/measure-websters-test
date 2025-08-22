@@ -1,0 +1,6 @@
+datatype: social.tiktok
+version: '1.0'
+description: TikTok user interaction data with detailed event tracking
+sample_limit: 50
+tags:
+- social-media

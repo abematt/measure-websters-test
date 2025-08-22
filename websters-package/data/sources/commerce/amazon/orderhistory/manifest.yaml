@@ -1,0 +1,6 @@
+datatype: commerce.amazon.orderhistory
+version: '1.0'
+description: Amazon order history and purchase data
+sample_limit: 50
+tags:
+- e-commerce

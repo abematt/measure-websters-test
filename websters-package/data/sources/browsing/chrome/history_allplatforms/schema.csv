@@ -1,0 +1,10 @@
+Column,Type,Example,Description
+user_id,String,007d3f75bc99380eb6a9eea7a9c03c5e,The user ID
+event_datetime,Date / Time,2023-04-01 7:43:47,Date & Time the domain was visited
+event_type,String,browsed_page,browsed_page or search
+domain,String,bing.com,Domain of the page visited. 
+title,String,Bing,Title of page visited. Only available when event is browsed_page
+url,String,https://www.bing.com/?setlang=es,URL of page visited. 
+search_term,String,,Search term entered by user.  Only available when event is search
+search_engine,String,google,Search engine used by user
+browser,String,chrome,Always chrome

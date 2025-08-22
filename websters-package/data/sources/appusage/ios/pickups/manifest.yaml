@@ -1,0 +1,7 @@
+datatype: appusage.ios.pickups
+version: '1.0'
+description: iOS device pickup frequency and patterns
+sample_limit: 50
+tags:
+- app-metrics
+- ios

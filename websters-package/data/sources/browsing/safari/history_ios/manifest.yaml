@@ -1,0 +1,8 @@
+datatype: browsing.safari.history_ios
+version: '1.0'
+description: Safari browsing and search history (iOS only)
+sample_limit: 50
+tags:
+- web-activity
+- ios
+- safari

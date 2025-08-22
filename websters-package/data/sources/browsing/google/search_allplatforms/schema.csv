@@ -1,0 +1,6 @@
+Column,Type,Example,Description
+user_id,String,007d3f75bc99380eb6a9eea7a9c03c5e,The user ID
+event_datetime,Date / Time,2023-05-09 1:59:35,Date & Time the domain was visited
+event_type,String,search,Always search
+search_term,String,why is plastic surgery called plastic,Search term entered by user. 
+search_engine,String,google,Search engine used by user.  Will always be google.

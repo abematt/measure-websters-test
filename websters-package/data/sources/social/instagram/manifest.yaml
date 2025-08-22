@@ -1,0 +1,6 @@
+datatype: social.instagram
+version: '1.0'
+description: Instagram user interaction data with detailed event tracking
+sample_limit: 50
+tags:
+- social-media

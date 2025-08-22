@@ -1,0 +1,19 @@
+Event,Description,Event Data Example,Notes
+ads_post_viewed,Recently viewed ad impression posts,"{""author"": ""wattpad""}",Instagram only provides most recent ad posts (~7 days)
+ads_video_watched,Recently viewed ad videos watched,"{""author"": ""tubi""}",Instagram only provides most recent ad videos (~7 days)
+ads_view,Recently viewed ad impressions,"{""author"": ""disneyplus""}",Instagram only provides most recent ad views (~7 days)
+ai_conversation,An ai conversation that occurs from search bar. ,"{""word_count"": 13, ""text"": ""Oops! I can't generate that image. Can I help you imagine something else?""}","Due to low incidence, not clear on available history of ai conversations in DYI file.  
+There is no indication if text is user prompt or ai response. "
+comment-post,A post comment from user,n/a,
+comment-reel,A reel comment from user,n/a,
+follower,Another user following this user,"{""follower_user_id"": ""raisingcanes""}",
+following,User following another user,"{""following_user_id"": ""hphighlander""}",
+like_comment,User liking a comment,"{""title"": ""aquashell24"", ""reference"": ""https://www.instagram.com/reel/DAqfiQUtdhs/"", ""type"": ""comment""}",
+like_post,User liking a post,"{""title"": ""factsdailyy"", ""reference"": ""https://www.instagram.com/reel/C-MlEZDud3R/"", ""type"": ""post""}",
+like_story,User liking a story,"{""title"": ""danger_plant"", ""type"": ""story""}",
+message_received,A message sent from a user,"{""word_count"": 6}",
+message_sent,A message sent to user,"{""word_count"": 6}",
+post,A post created by user,n/a,
+search,A search initiated by user,"{""search_term"": ""king kong""}",Instagram only provides most recent searches (30 days)
+reel,When a user creates a reel,"{""title"": ""#capcut #capcut2025 so true about me""}",
+story,A story submitted by user,"{""source_type"": ""feed_reshare""}",

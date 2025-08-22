@@ -1,0 +1,30 @@
+user_id,purchase_date,item,price,currency,type,platform
+002ae601d3eb31e5abbca6f1f30befb0,2023-04-01 00:00:00,RentCafe Resident,0,$,ios app,ios
+002ae601d3eb31e5abbca6f1f30befb0,2023-04-02 00:00:00,Tom Thumb Deals & Delivery,0,$,ios app,ios
+002ae601d3eb31e5abbca6f1f30befb0,2023-04-02 00:00:00,UNO!TM,0,$,ios app,ios
+002ae601d3eb31e5abbca6f1f30befb0,2023-04-10 00:00:00,Dream Gym,0,$,ios app,ios
+002ae601d3eb31e5abbca6f1f30befb0,2023-04-11 00:00:00,Mermaid Straw,0,$,ios app,ios
+002ae601d3eb31e5abbca6f1f30befb0,2023-04-11 00:00:00,Skill Cash,0,$,ios app,ios
+002ae601d3eb31e5abbca6f1f30befb0,2023-04-13 00:00:00,Temu: Shop Like a Billionaire,0,$,ios app,ios
+002ae601d3eb31e5abbca6f1f30befb0,2023-04-19 00:00:00,Bingo Bling: Real Money Games,0,$,ios app,ios
+002ae601d3eb31e5abbca6f1f30befb0,2023-04-19 00:00:00,Spider Solitaire Deluxe 2,0,$,ios app,ios
+002ae601d3eb31e5abbca6f1f30befb0,2023-04-22 00:00:00,Apple Music Subscription,5.99,$,subscription,ios
+002ae601d3eb31e5abbca6f1f30befb0,2023-04-25 00:00:00,Coins Package,7.99,$,in-app purchase,ios
+002ae601d3eb31e5abbca6f1f30befb0,2023-04-25 00:00:00,Coins Package,3.99,$,in-app purchase,ios
+002ae601d3eb31e5abbca6f1f30befb0,2023-04-25 00:00:00,Coins Package,8.99,$,subscription,ios
+002ae601d3eb31e5abbca6f1f30befb0,2023-04-26 00:00:00,iCloud+ with 200 GB of Storage,2.99,$,subscription,ios
+002ae601d3eb31e5abbca6f1f30befb0,2023-04-27 00:00:00,SeaWorld,0,$,ios app,ios
+002ae601d3eb31e5abbca6f1f30befb0,2023-04-29 00:00:00,Gatewise Multifamily-Access,0,$,ios app,ios
+00606aed596339d7bdafe51a0d717c75,2023-04-02 00:00:00,Google Keep - Notes and lists,0,$,ios app,ios
+00606aed596339d7bdafe51a0d717c75,2023-04-02 00:00:00,Temu: Shop Like a Billionaire,0,$,ios app,ios
+00606aed596339d7bdafe51a0d717c75,2023-04-06 00:00:00,Baby Unicorn : Simulator Games,0,$,ios app,ios
+00606aed596339d7bdafe51a0d717c75,2023-04-11 00:00:00,Apple Music Subscription,5.99,$,subscription,ios
+00606aed596339d7bdafe51a0d717c75,2023-04-18 00:00:00,Moshi Premium,79.99,$,subscription,ios
+00606aed596339d7bdafe51a0d717c75,2023-04-23 00:00:00,Giggle Babies - Toddler Care,0,$,ios app,ios
+00606aed596339d7bdafe51a0d717c75,2023-04-26 00:00:00,AppleCare+,7.99,$,applecare+,ios
+00606aed596339d7bdafe51a0d717c75,2023-04-27 00:00:00,iCloud+ with 200 GB of Storage,2.99,$,subscription,ios
+00606aed596339d7bdafe51a0d717c75,2023-04-29 00:00:00,Coming to Bed - Essential,0,$,app bundle,ios
+00606aed596339d7bdafe51a0d717c75,2023-04-29 00:00:00,Couple Life 3D,0,$,ios app,ios
+00606aed596339d7bdafe51a0d717c75,2023-04-29 00:00:00,Deep Clean Inc. 3D Fun Cleanup,0,$,ios app,ios
+00606aed596339d7bdafe51a0d717c75,2023-04-29 00:00:00,Impossible Date: Tricky Riddle,0,$,ios app,ios
+00606aed596339d7bdafe51a0d717c75,2023-04-30 00:00:00,AXS Tickets,0,$,ios app,ios

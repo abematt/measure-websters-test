@@ -1,0 +1,7 @@
+datatype: browsing.google.search_allplatforms
+version: '1.0'
+description: Google search history across all platforms (iOS, Android, Desktop)
+sample_limit: 50
+tags:
+- web-activity
+- google

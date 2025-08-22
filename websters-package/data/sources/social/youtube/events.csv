@@ -1,0 +1,4 @@
+Event,Description,Event Data Example
+watched_video,A video watched by user,"{""title"": ""Watched Driving Test Tips & Tricks Online Course"", ""video_id"": ""YBDKRTXIN8s"", ""channel_name"": ""DTC Driving Tips for Life"", ""channel_id"": ""UCTfHZk5TJqDhemuk13aHHUA"", ""is_ad"": false}"
+search,A search queried by user,"{""search_term"": ""card sharks money cards bust""}"
+add_to_playlist,A video is added to playlist by user,"{""video_id"": ""tRZQt1CJUe0""}"

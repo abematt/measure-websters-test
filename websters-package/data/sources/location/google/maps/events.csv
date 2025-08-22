@@ -1,0 +1,5 @@
+Event,Description,Event Data Example,Notes
+search,User initiated a search in google maps app,"{""search_term"": ""Hotels""}",
+directions_to,User requested directions to a location,"{""to"": ""bike shops near holborn"", ""from"": ""LABS House, Bloomsbury Way, London""}",
+viewed_area,User viewing map for specified area,"{""area"": ""London""}",
+viewed_location_profile,User viewing details of a specific location,"{""location_profile"": ""Blossom Capital""}",

@@ -1,0 +1,14 @@
+Event,Description,Event Data Example,Note
+snap-received,Snap received to user,"{""media_type"": ""image""}",
+snap-sent,Snap sent to user,"{""media_type"": ""image""}",
+story-created,Story created by user,n/a,
+story-viewed,Story viewed by user,"{""media_type"": ""video""}",
+spotlight-viewed,Spotlight viewed by user,"{""view_time"": ""11.50 seconds""}",
+search,Search conducted by user,"{""search_term"""" ""madison oniel""}","For searches, Snap only event_datetime to the hour"
+login,Login by user,"{""ip"": ""1.2.3.4"", ""country"": ""US""}",
+talk-incoming,Incoming talk to user,"{""length_sec"": 34}",
+talk-outgoing,Outgoing talk initiated by user,"{""length_sec"": 11}",
+chat-received,Chat received by user,"{""media_type"": ""text""}",
+chat-sent,Chat sent to user,"{""media_type"": ""text""}",
+friend-request-sent,Friend request sent by user,"{""friend_username"": ""river_powell""}",
+friend-request-received,Friend request sent to user,"{""friend_username"": ""granttww""}",

@@ -1,0 +1,16 @@
+Event,Description,Event Data Example
+login,User login,"{""ip"": ""172.56.22.171"", ""device_model"": ""iPhone14,5"", ""device_system"": ""iOS 16.0""}"
+search,A search done by a user,"{""search_term"": ""chowchow""}"
+share,A video is shared by a user,"{""shared_content"": ""video"", ""video_id"": ""7183026883515141422"", ""method"": ""whatsapp""}"
+direct_message,A message sent or received by a user.,"{""word_count"": ""1"", ""chat_username"": ""mb93x_""}"
+browsed_video,A video watched by user,"{""video_id"": ""7178206116961193221""}"
+favorited_video,A video added to favorites playlist by user,"{""video_id"": ""7183382917866097966""}"
+liked_video,A video liked by user,"{""video_id"": ""7186140939159751978""}"
+following,A user follows another user,"{""username"": ""ashell1209""}"
+posted_video,A video posted by user,n/a
+favorite_sound,A sound or video effect saved by user,"{""sound_id"": ""7151464376392846123""}"
+favorite_effect,A sound or video effect saved by user,"{""effect_id"": ""2818398.html""}"
+live_watch,A live session viewed by user,"{""num_comments"": ""17"", ""num_questions"": ""0""}"
+send_gift,A gift is sent by user,"{""gift_amount"": ""2"", ""gift_user_id"": ""coletteraebailey""}"
+buy_gift,A gift is purchased by user,"{""price"": ""5.00"", ""currency"": ""US Dollars""}"
+comment,A comment made by a user ,"{""word_count"": ""8""}"
