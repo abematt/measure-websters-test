@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./websters-package
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8001:8001"
+    volumes:
+      # Mount source code for hot reload
+      - ./websters-package:/app
+      # Use local index_storage directory (bind mount)
+      - ./websters-package/index_storage:/app/index_storage
+    environment:
+      # OpenAI Configuration
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      
+      # Serper API Configuration (for web search)
+      - SERPER_API_KEY=${SERPER_API_KEY}
+      
+      # MongoDB Configuration
+      - MONGODB_URL=${MONGODB_URL}
+      - DATABASE_NAME=${DATABASE_NAME:-websters_auth}
+      
+      # JWT Configuration
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-your-secret-key-change-in-production}
+      - JWT_ALGORITHM=${JWT_ALGORITHM:-HS256}
+      - ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES:-30}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    command: uvicorn main_refactored:app --host 0.0.0.0 --port 8001 --reload
+
+  frontend:
+    build:
+      context: ./chat-interface
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      # Mount source code for hot reload
+      - ./chat-interface:/app
+      # Anonymous volume for node_modules to avoid conflicts
+      - /app/node_modules
+      # Mount .next for faster rebuilds
+      - /app/.next
+    environment:
+      # Backend API URL - use localhost since browser makes the requests
+      - NEXT_PUBLIC_API_URL=http://localhost:8001
+      # Enable Next.js development mode
+      - NODE_ENV=development
+    depends_on:
+      - backend
+    command: npm run dev
