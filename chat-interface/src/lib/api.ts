@@ -23,11 +23,13 @@ export interface LocalQueryResponse {
   web_search_eligible: boolean;
   preferred_sources: string[] | null;  // top-level, can be null
   suggested_search_context: string | null;
+  message_id: string | null;  // ID of saved message for web enrichment
 }
 
 // Phase 2: Web enrichment
 export interface WebEnrichmentRequest {
   query: string;
+  message_id?: string;  // ID of existing message to update with web response
   local_context?: string;
   preferred_sources?: string[];
   keywords?: string[];

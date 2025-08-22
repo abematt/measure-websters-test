@@ -26,8 +26,6 @@ from api.models import (
     WebEnrichmentResponse,
     LoginRequest,
     LoginResponse,
-    SaveMessageRequest,
-    UpdateWebResponseRequest,
     GetMessagesResponse
 )
 from api.endpoints import (
@@ -37,8 +35,6 @@ from api.endpoints import (
     web_enrichment
 )
 from api.endpoints.chat import (
-    save_message,
-    update_web_response,
     get_messages,
     delete_message
 )
@@ -150,13 +146,13 @@ async def get_available_filters(current_user: UserInDB = Depends(get_current_act
 async def query_endpoint(request: QueryRequest, current_user: UserInDB = Depends(get_current_active_user)):
 # async def query_endpoint(request: QueryRequest):
     """Basic RAG query endpoint"""
-    return await query_index(request, index)
+    return await query_index(request, index, current_user.username)
 
 
 @app.post("/query-combined", response_model=QueryResponse)
 async def query_combined_endpoint(request: QueryRequest, current_user: UserInDB = Depends(get_current_active_user)):
     """Combined local RAG + web search query"""
-    return await query_combined(request, index, source_preferences)
+    return await query_combined(request, index, source_preferences, current_user.username)
 
 # Two-step workflow endpoints - CURRENT MAIN COMBINED SEARCH (Protected)
 @app.post("/query-local", response_model=LocalQueryResponse)
@@ -167,7 +163,7 @@ async def query_local_endpoint(request: QueryRequest, current_user: UserInDB = D
     - Returns response with metadata for potential web enrichment
     - Includes web search eligibility and preferred sources
     """
-    return await local_query(request, index, source_preferences)
+    return await local_query(request, index, source_preferences, current_user.username)
 
 @app.post("/query-web-enrich", response_model=WebEnrichmentResponse)
 async def query_web_enrich_endpoint(request: WebEnrichmentRequest, current_user: UserInDB = Depends(get_current_active_user)):
@@ -178,7 +174,7 @@ async def query_web_enrich_endpoint(request: WebEnrichmentRequest, current_user:
     - Fetches content and provides concise synthesis
     - Can be used standalone or with output from query-local
     """
-    return await web_enrichment(request)
+    return await web_enrichment(request, current_user.username)
 
 # Authentication endpoints
 @app.post("/login", response_model=LoginResponse)
@@ -215,23 +211,7 @@ async def login_endpoint(request: LoginRequest):
         }
     )
 
-# Chat message endpoints (Protected)
-@app.post("/chat/save")
-async def save_chat_message_endpoint(
-    request: SaveMessageRequest,
-    current_user: UserInDB = Depends(get_current_active_user)
-):
-    """Save a new chat message with local response"""
-    return await save_message(request, current_user)
-
-@app.put("/chat/update-web")
-async def update_chat_web_response_endpoint(
-    request: UpdateWebResponseRequest,
-    current_user: UserInDB = Depends(get_current_active_user)
-):
-    """Add web enrichment to existing message"""
-    return await update_web_response(request, current_user)
-
+# Chat message endpoints (Protected) - For history management only
 @app.get("/chat/messages", response_model=GetMessagesResponse)
 async def get_chat_messages_endpoint(
     limit: int = 50,

@@ -53,10 +53,12 @@ class LocalQueryResponse(BaseModel):
     web_search_eligible: bool
     preferred_sources: Optional[List[str]] = None
     suggested_search_context: Optional[str] = None
+    message_id: Optional[str] = None  # ID of saved message for web enrichment
     
 class WebEnrichmentRequest(BaseModel):
     """Request for web enrichment with optional override parameters"""
     query: str
+    message_id: Optional[str] = None  # ID of existing message to update with web response
     local_context: Optional[str] = None  # Can be provided from LocalQueryResponse or manually
     preferred_sources: Optional[List[str]] = None  # Can override local suggestions
     keywords: Optional[List[str]] = None  # Can provide manual keywords instead of synthesis
@@ -86,22 +88,13 @@ class ChatMessage(BaseModel):
     web_citations: List[Dict[str, Any]] = Field(default=[], description="Web search results")
     is_web_enriched: bool = Field(default=False, description="Whether web search was performed")
     
+    # Track which endpoint was used
+    endpoint_type: str = Field(..., description="Endpoint used: query, query-combined, query-local")
+    
     timestamp: datetime = Field(default_factory=datetime.utcnow)
     updated_at: Optional[datetime] = None
     metadata: Optional[Dict[str, Any]] = Field(None, description="Query filters, mode, etc.")
 
-class SaveMessageRequest(BaseModel):
-    """Request to save initial local response"""
-    message: str
-    local_response: str
-    local_citations: List[Dict[str, Any]] = []
-    metadata: Optional[Dict[str, Any]] = None
-
-class UpdateWebResponseRequest(BaseModel):
-    """Request to add web enrichment to existing message"""
-    message_id: str
-    web_response: str
-    web_citations: List[Dict[str, Any]] = []
 
 class GetMessagesResponse(BaseModel):
     """Response containing user's chat history"""

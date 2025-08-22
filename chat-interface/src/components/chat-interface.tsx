@@ -93,6 +93,7 @@ export function ChatInterface() {
     try {
       const webSearchResponse = await api.webSearchExplicit({
         query: originalQuery,
+        message_id: enhancedResponse.message_id || undefined,
         local_context: enhancedResponse.suggested_search_context || undefined,
         preferred_sources: enhancedResponse.preferred_sources || undefined,
         ...QUERY_SETTINGS.WEB_SEARCH,

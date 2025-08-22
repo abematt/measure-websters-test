@@ -78,7 +78,7 @@ def update_last_login(username: str):
 
 # Chat message CRUD operations
 def save_chat_message(user_id: str, message: str, local_response: str, 
-                     local_citations: List[dict], metadata: Optional[dict] = None) -> str:
+                     local_citations: List[dict], endpoint_type: str, metadata: Optional[dict] = None) -> str:
     """Save a new chat message with local response"""
     db = get_database()
     
@@ -90,6 +90,7 @@ def save_chat_message(user_id: str, message: str, local_response: str,
         "web_response": None,
         "web_citations": [],
         "is_web_enriched": False,
+        "endpoint_type": endpoint_type,
         "timestamp": datetime.utcnow(),
         "updated_at": None,
         "metadata": metadata

@@ -4,12 +4,14 @@ from llama_index.core.query_engine import RetrieverQueryEngine
 from llama_index.core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage
+from typing import Optional
 import traceback
 
 from ..models import QueryRequest, QueryResponse
 from ..utils import build_metadata_filters, get_source_instruction_and_format
+from ..auth.utils import save_chat_message
 
-async def query_combined(request: QueryRequest, index, source_preferences) -> QueryResponse:
+async def query_combined(request: QueryRequest, index, source_preferences, user_id: Optional[str] = None) -> QueryResponse:
     """Combined local RAG + web search query"""
     if not index:
         raise HTTPException(status_code=503, detail="Index not loaded")
@@ -196,10 +198,27 @@ async def query_combined(request: QueryRequest, index, source_preferences) -> Qu
             }
             source_nodes.insert(0, web_source_info)
         
-        return QueryResponse(
+        query_response = QueryResponse(
             response=combined_response,
             source_nodes=source_nodes
         )
+        
+        # Auto-save to database if user is authenticated
+        if user_id:
+            try:
+                save_chat_message(
+                    user_id=user_id,
+                    message=request.query,
+                    local_response=combined_response,  # Save the combined response as local response
+                    local_citations=source_nodes,
+                    endpoint_type="query-combined",
+                    metadata=request.filters
+                )
+            except Exception as e:
+                print(f"Failed to save message: {e}")
+                # Don't fail the query if save fails
+        
+        return query_response
     except Exception as e:
         print(f"Error in query-combined: {e}")
         print(f"Traceback: {traceback.format_exc()}")

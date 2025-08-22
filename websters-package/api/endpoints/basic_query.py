@@ -2,13 +2,14 @@ from fastapi import HTTPException
 from llama_index.core.retrievers import VectorIndexRetriever
 from llama_index.core.query_engine import RetrieverQueryEngine
 from llama_index.core.prompts import PromptTemplate
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 import traceback
 
 from ..models import QueryRequest, QueryResponse
 from ..utils import build_metadata_filters
+from ..auth.utils import save_chat_message
 
-async def query_index(request: QueryRequest, index) -> QueryResponse:
+async def query_index(request: QueryRequest, index, user_id: Optional[str] = None) -> QueryResponse:
     """Basic RAG query endpoint"""
     if not index:
         raise HTTPException(status_code=503, detail="Index not loaded")
@@ -49,10 +50,27 @@ async def query_index(request: QueryRequest, index) -> QueryResponse:
             }
             source_nodes.append(source_info)
         
-        return QueryResponse(
+        query_response = QueryResponse(
             response=str(response),
             source_nodes=source_nodes
         )
+        
+        # Auto-save to database if user is authenticated
+        if user_id:
+            try:
+                save_chat_message(
+                    user_id=user_id,
+                    message=request.query,
+                    local_response=str(response),
+                    local_citations=source_nodes,
+                    endpoint_type="query",
+                    metadata=request.filters
+                )
+            except Exception as e:
+                print(f"Failed to save message: {e}")
+                # Don't fail the query if save fails
+        
+        return query_response
     except Exception as e:
         print(f"Error in query: {e}")
         print(f"Traceback: {traceback.format_exc()}")

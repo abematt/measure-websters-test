@@ -4,7 +4,7 @@ Performs RAG retrieval and provides metadata for potential web enrichment
 """
 
 from fastapi import HTTPException
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 from llama_index.core.retrievers import VectorIndexRetriever
 from llama_index.core.query_engine import RetrieverQueryEngine
 from llama_index.core.prompts import PromptTemplate
@@ -12,9 +12,10 @@ import traceback
 
 from ..models import QueryRequest, LocalQueryResponse
 from ..utils import build_metadata_filters, extract_metadata_context
+from ..auth.utils import save_chat_message
 
 
-async def local_query(request: QueryRequest, index, source_preferences) -> LocalQueryResponse:
+async def local_query(request: QueryRequest, index, source_preferences, user_id: Optional[str] = None) -> LocalQueryResponse:
     """
     Perform local RAG query and return results with web enrichment metadata
     
@@ -86,6 +87,22 @@ async def local_query(request: QueryRequest, index, source_preferences) -> Local
             }
             source_nodes.append(source_info)
         
+        # Auto-save to database if user is authenticated
+        message_id = None
+        if user_id:
+            try:
+                message_id = save_chat_message(
+                    user_id=user_id,
+                    message=request.query,
+                    local_response=str(response),
+                    local_citations=source_nodes,
+                    endpoint_type="query-local",
+                    metadata=request.filters
+                )
+            except Exception as e:
+                print(f"Failed to save message: {e}")
+                # Don't fail the query if save fails
+        
         # Return comprehensive local query response
         return LocalQueryResponse(
             response=str(response),
@@ -93,7 +110,8 @@ async def local_query(request: QueryRequest, index, source_preferences) -> Local
             metadata_context=metadata_context,
             web_search_eligible=web_search_eligible,
             preferred_sources=preferred_sources if preferred_sources else None,
-            suggested_search_context=suggested_context
+            suggested_search_context=suggested_context,
+            message_id=message_id
         )
         
     except Exception as e:

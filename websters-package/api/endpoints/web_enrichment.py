@@ -15,6 +15,7 @@ from haystack.components.converters import HTMLToDocument
 from haystack import Pipeline
 
 from ..models import WebEnrichmentRequest, WebEnrichmentResponse
+from ..auth.utils import update_chat_message_web_response
 
 load_dotenv()
 
@@ -268,7 +269,59 @@ Answer:"""
 
 
 # FastAPI endpoint function
-async def web_enrichment(request: WebEnrichmentRequest) -> WebEnrichmentResponse:
+async def web_enrichment(request: WebEnrichmentRequest, user_id: Optional[str] = None) -> WebEnrichmentResponse:
     """Web enrichment endpoint"""
+    print(f"=== WEB ENRICHMENT DEBUG ===")
+    print(f"user_id: {user_id}")
+    print(f"message_id: {request.message_id}")
+    print(f"query: {request.query}")
+    
     workflow = WebEnrichmentWorkflow()
-    return await workflow.execute(request)
+    response = await workflow.execute(request)
+    
+    print(f"Web search results count: {len(response.web_search_results)}")
+    
+    # Auto-update existing message if message_id is provided and user is authenticated
+    if user_id and request.message_id:
+        try:
+            # Convert web search results to citations format
+            web_citations = []
+            for result in response.web_search_results:
+                title = result.get("title", "")
+                link = result.get("link", "")
+                snippet = result.get("snippet", "")
+                
+                # Create rich text that includes both the snippet and the link
+                citation_text = f"{snippet}\n\nSource: {title}\nURL: {link}" if title else f"{snippet}\nURL: {link}"
+                
+                web_citations.append({
+                    "text": citation_text,
+                    "metadata": {
+                        "source_type": "web_search",
+                        "url": link,
+                        "title": title,
+                        "source_origin": "web_search",
+                        "position": result.get("position", 0),
+                        "snippet": snippet  # Keep original snippet separate
+                    },
+                    "score": 1.0 - (result.get("position", 1) / 10)  # Higher position = higher score
+                })
+            
+            success = update_chat_message_web_response(
+                message_id=request.message_id,
+                web_response=response.enriched_response,
+                web_citations=web_citations
+            )
+            
+            if success:
+                print(f"Successfully updated message {request.message_id} with web enrichment")
+            else:
+                print(f"Failed to update message {request.message_id}")
+                
+        except Exception as e:
+            print(f"Failed to update message: {e}")
+            import traceback
+            print(f"Traceback: {traceback.format_exc()}")
+            # Don't fail the query if update fails
+    
+    return response
