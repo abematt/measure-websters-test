@@ -58,7 +58,7 @@ export interface HealthResponse {
 
 export type QueryMode = 'basic' | 'combined' | 'enhanced';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL 
 
 // Authentication error class
 export class AuthenticationError extends Error {
