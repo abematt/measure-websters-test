@@ -9,6 +9,99 @@ from ..utils import get_source_instruction_and_format
 from ..utils.local_rag import create_standard_local_rag
 from ..auth.utils import save_chat_message
 
+async def simplify_query_for_web_search(complex_query: str, context: str) -> dict:
+    """Use AI to determine if web search is needed and create optimized search strategy"""
+    simplifier_llm = ChatOpenAI(model="gpt-4o-mini")
+    
+    simplifier_prompt = f"""You are analyzing a query about proprietary event data collected from various platforms (social media, e-commerce, apps, etc.).
+
+Query: {complex_query}
+Database Context: {context[:500]}...
+
+This database contains INTERNAL event data that is not publicly available. Determine if this query would benefit from web search supplementation.
+
+DEFAULT TO web search (needs_web_search: true) UNLESS the query is PURELY about internal capabilities with NO conceptual terms that need explanation.
+
+SKIP web search (set needs_web_search: false) ONLY if the query is:
+- Purely technical about data schema/fields ("What columns do we have for X?")
+- Simple yes/no about data collection ("Do we track user login times?") 
+- Internal data format questions ("How is timestamp stored?")
+- Questions with zero conceptual terms that could benefit from context
+
+Return JSON:
+{{"needs_web_search": true/false, "reasoning": "why web search is/isn't needed", "search_terms": ["term1", "term2"], "query_type": "factual/comparison/recent_events/how_to", "focus_areas": ["what to search for"], "avoid_duplicating": ["what database already covers"]}}"""
+
+    try:
+        response = simplifier_llm.invoke([HumanMessage(content=simplifier_prompt)])
+        import json
+        # Try to parse JSON response, fallback to simple terms extraction
+        try:
+            result = json.loads(response.content)
+            return result
+        except:
+            # Fallback: default to web search when in doubt
+            return {
+                "needs_web_search": True,
+                "reasoning": "Fallback - defaulting to web search for safety",
+                "search_terms": [complex_query],
+                "query_type": "factual",
+                "focus_areas": ["additional context"],
+                "avoid_duplicating": []
+            }
+    except Exception as e:
+        print(f"Query simplification failed: {e}")
+        return {
+            "needs_web_search": True,
+            "reasoning": "Error in analysis - defaulting to web search",
+            "search_terms": [complex_query],
+            "query_type": "factual", 
+            "focus_areas": ["additional context"],
+            "avoid_duplicating": []
+        }
+
+def extract_preferred_sources(nodes, source_preferences) -> list:
+    """Clean extraction of preferred sources from nodes and preferences"""
+    if not source_preferences or not nodes:
+        return []
+    
+    preferred_sources = []
+    categories = set()
+    platforms = set()
+    datatypes = set()
+    
+    # Extract metadata from nodes
+    for node in nodes:
+        metadata = node.node.metadata if hasattr(node, 'node') else node.get('metadata', {})
+        if 'category' in metadata:
+            categories.add(metadata['category'])
+        if 'platform' in metadata:
+            platforms.add(metadata['platform'])
+        if 'datatype' in metadata:
+            datatype = metadata['datatype']
+            if '.' in datatype and len(datatype.split('.')) > 1:
+                datatypes.add(datatype.split('.')[1])
+    
+    # Get preferences from categories
+    source_prefs = source_preferences.get('source_preferences', {})
+    by_category = source_prefs.get('by_category', {})
+    by_platform = source_prefs.get('by_platform', {})
+    
+    for category in categories:
+        if category in by_category:
+            cat_prefs = by_category[category]
+            for datatype in datatypes:
+                if datatype in cat_prefs:
+                    platform_prefs = cat_prefs[datatype]
+                    preferred_sources.extend(platform_prefs.get('preferred_sources', []))
+    
+    for platform in platforms:
+        if platform in by_platform:
+            plat_prefs = by_platform[platform]
+            preferred_sources.extend(plat_prefs.get('preferred_sources', []))
+    
+    # Remove duplicates and limit to reasonable number
+    return list(set(preferred_sources))[:5]
+
 async def query_combined(request: QueryRequest, index, source_preferences, user_id: Optional[str] = None) -> QueryResponse:
     """Combined local RAG + web search query"""
     if not index:
@@ -26,91 +119,101 @@ async def query_combined(request: QueryRequest, index, source_preferences, user_
         context_str = rag_results["context_string"]
         nodes = rag_results["raw_nodes"]
         
-        # Step 2: Get web search results with GPT-4o-mini
-        llm = ChatOpenAI(model="gpt-4o-mini", output_version="responses/v1")
-        tool = {"type": "web_search_preview"}
-        llm_with_tools = llm.bind_tools([tool])
-        
+        # Step 2: Prepare for enhanced web search
         # Get source-specific instructions and response format
         source_instruction, response_format = get_source_instruction_and_format(
             nodes, source_preferences
         ) if source_preferences else ("", {})
         
-        # Extract preferred sources for domain restriction
-        preferred_sources = []
-        if source_preferences:
-            categories = set()
-            platforms = set()
-            datatypes = set()
-            
-            for node in nodes:
-                metadata = node.node.metadata if hasattr(node, 'node') else node.get('metadata', {})
-                if 'category' in metadata:
-                    categories.add(metadata['category'])
-                if 'platform' in metadata:
-                    platforms.add(metadata['platform'])
-                if 'datatype' in metadata:
-                    datatype = metadata['datatype']
-                    if '.' in datatype:
-                        parts = datatype.split('.')
-                        if len(parts) > 1:
-                            datatypes.add(parts[1])
-            
-            # Collect preferred sources from all relevant categories/platforms
-            for category in categories:
-                if category in source_preferences['source_preferences']['by_category']:
-                    cat_prefs = source_preferences['source_preferences']['by_category'][category]
-                    for platform in datatypes:
-                        if platform in cat_prefs:
-                            platform_prefs = cat_prefs[platform]
-                            preferred_sources.extend(platform_prefs.get('preferred_sources', []))
-            
-            for platform in platforms:
-                if platform in source_preferences['source_preferences']['by_platform']:
-                    plat_prefs = source_preferences['source_preferences']['by_platform'][platform]
-                    preferred_sources.extend(plat_prefs.get('preferred_sources', []))
+        # Extract preferred sources using clean helper function
+        preferred_sources = extract_preferred_sources(nodes, source_preferences)
         
-        print("Source:", source_instruction)
-        print("Response format:", response_format)
+        # Use AI to determine if web search is needed and get strategy
+        search_strategy = await simplify_query_for_web_search(request.query, context_str)
+        
+        print("Search strategy:", search_strategy)
+        print("Web search needed:", search_strategy.get("needs_web_search", True))
+        print("Reasoning:", search_strategy.get("reasoning", "No reasoning provided"))
+        
+        # Skip web search if AI determined it's not needed
+        if not search_strategy.get("needs_web_search", True):
+            print(f"Skipping web search: {search_strategy.get('reasoning', 'Query is about internal data')}")
+            
+            # Auto-save to database if user is authenticated (local-only response)
+            if user_id:
+                try:
+                    save_chat_message(
+                        user_id=user_id,
+                        message=request.query,
+                        local_response=local_response_text,
+                        local_citations=rag_results["source_nodes"],
+                        endpoint_type="query-combined-local-only",
+                        metadata=request.filters
+                    )
+                except Exception as e:
+                    print(f"Failed to save message: {e}")
+            
+            return QueryResponse(
+                response=local_response_text,
+                source_nodes=rag_results["source_nodes"]
+            )
+        
         print("Preferred sources:", preferred_sources)
         
-        # Simplified web search prompt
-        max_sentences = response_format.get('max_context_sentences', 2)
+        # Create improved web search prompts based on AI analysis
+        max_sentences = response_format.get('max_context_sentences', 3)
+        search_terms = " ".join(search_strategy.get("search_terms", [request.query]))
+        query_type = search_strategy.get("query_type", "factual")
+        focus_areas = search_strategy.get("focus_areas", [])
+        avoid_duplicating = search_strategy.get("avoid_duplicating", [])
         
-        # Simple domain constraint
-        domain_note = ""
+        # Domain constraints (cleaner approach)
+        domain_constraint = ""
         if preferred_sources:
-            domain_note = f"{', '.join(preferred_sources[:2])}. CRITICAL:  DO NOT CONSIDER ANY OTHER WEBPAGE OTHER THAN THIS"
+            domain_list = ", ".join(preferred_sources[:3])
+            domain_constraint = f"Prioritize information from: {domain_list}. "
         
-        # Create system message for web search
+        # Query-type specific system messages
+        query_type_prompts = {
+            "factual": "You are a technical research assistant. Provide factual information and explanations.",
+            "comparison": "You are a comparison specialist. Focus on differences, pros/cons, and trade-offs.", 
+            "recent_events": "You are a technology news researcher. Focus on recent developments and updates.",
+            "how_to": "You are a technical guide. Focus on practical steps and best practices.",
+            "troubleshooting": "You are a problem-solving expert. Focus on solutions and fixes."
+        }
+        
+        system_prompt = query_type_prompts.get(query_type, query_type_prompts["factual"])
+        
         web_search_system = SystemMessage(content=(
-            "You are a web search assistant for a RAG pipeline. "
-            "When 'domain_note' contains a URL, limit all information sourcing exclusively to that specific domain. "
-            "Begin with a concise checklist (3-7 bullets) outlining your sub-tasks before sourcing information. "
-            "When conducting the web search, focus on explaining or elaborating on the relevant concepts. NEVER directly answer the query; "
-            "this is intended to support a RAG pipeline workflow. "
-            "After each sourcing step, briefly validate that all retrieved information originated from the specified domain and proceed, "
-            "or correct if this is not the case."
+            f"{system_prompt} "
+            f"Your role is to SUPPLEMENT the existing database information, not replace it. "
+            f"{domain_constraint}"
+            f"Focus on: {', '.join(focus_areas) if focus_areas else 'additional context and recent information'}. "
+            f"Avoid repeating: {', '.join(avoid_duplicating) if avoid_duplicating else 'basic information already covered'}. "
+            f"Keep response to {max_sentences} sentences maximum."
         ))
         
-        # Create human message with the query
+        # Cleaner human message
         web_search_human = HumanMessage(content=(
-            f"Query: {request.query}\n\n"
-            f"Database context: {context_str[:300]}...\n\n"
-            f"Use web search to answer the following question. What is {request.query} using{domain_note}. Do not answer the question directly using web search."
-            f"Keep to {max_sentences} sentences."
+            f"Search terms: {search_terms}\n"
+            f"Original query: {request.query}\n"
+            f"Database already covers: {context_str[:400]}...\n\n"
+            f"Use web search to find supplementary information about: {search_terms}. "
+            f"Focus on what the database might be missing or outdated information."
         ))
         
-        print("request_query", request.query)
-        print("contextstr300", context_str[:300])
-        print("domain_note", domain_note)
-        print("max_sentences", max_sentences)
+        # Execute web search with improved prompts
+        llm = ChatOpenAI(model="gpt-4o-mini", output_version="responses/v1")
+        tool = {"type": "web_search_preview"}
+        llm_with_tools = llm.bind_tools([tool])
         
-        # Invoke with system and human messages
         web_response = llm_with_tools.invoke([web_search_system, web_search_human])
-
-        print("System prompt:", web_search_system.content)
-        print("Human prompt:", web_search_human.content)
+        
+        # Debug output (can be removed in production)
+        print(f"Query type detected: {query_type}")
+        print(f"Search terms used: {search_terms}")
+        print(f"Focus areas: {focus_areas}")
+        print(f"Avoiding duplication of: {avoid_duplicating}")
         
         # Extract web response
         web_response_text = ""
@@ -134,12 +237,32 @@ async def query_combined(request: QueryRequest, index, source_preferences, user_
         else:
             web_response_text = str(web_response)
         
-        # Step 3: Combine responses with clear annotations
+        # Step 3: Intelligently combine responses
         if web_response_text.strip() and web_search_performed:
-            combined_response = f"""**LOCAL DATABASE INFORMATION:**
+            # Create contextual response based on query type
+            if query_type == "recent_events":
+                combined_response = f"""**DATABASE CONTEXT:**
 {local_response_text}
 
-**WEB SEARCH RESULTS:**
+**RECENT DEVELOPMENTS:**
+{web_response_text}"""
+            elif query_type == "comparison":
+                combined_response = f"""**FOUNDATIONAL INFORMATION:**
+{local_response_text}
+
+**COMPARATIVE ANALYSIS:**
+{web_response_text}"""
+            elif query_type == "how_to":
+                combined_response = f"""**CORE METHODS:**
+{local_response_text}
+
+**ADDITIONAL TECHNIQUES:**
+{web_response_text}"""
+            else:
+                combined_response = f"""**DATABASE INFORMATION:**
+{local_response_text}
+
+**SUPPLEMENTARY WEB INFORMATION:**
 {web_response_text}"""
         else:
             combined_response = local_response_text
