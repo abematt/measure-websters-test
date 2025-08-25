@@ -33,6 +33,6 @@ services:
       - "3000:3000"
     environment:
       # Backend API URL - uses Docker service name for internal communication
-      - NEXT_PUBLIC_API_URL=http://localhost:8001
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:8001}
     depends_on:
       - backend
