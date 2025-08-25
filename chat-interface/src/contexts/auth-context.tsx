@@ -34,6 +34,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
+
   useEffect(() => {
     // Check for existing token on mount
     if (typeof window !== 'undefined') {
@@ -58,7 +60,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const login = async (username: string, password: string): Promise<LoginResponse> => {
     try {
-      const response = await fetch('http://localhost:8001/login', {
+      const response = await fetch(`${API_BASE_URL}/login`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
